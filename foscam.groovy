@@ -83,8 +83,12 @@ metadata {
       state "preset3", label: "preset 3", action: "preset3", icon: ""
     }
 
+    standardTile("refresh", "device.alarmStatus", inactiveLabel: false, decoration: "flat") {
+        state "default", action:"polling.poll", icon:"st.secondary.refresh"
+    }
+
     main "camera"
-      details(["cameraDetails", "take", "up", "alarmStatus", "left", "pause", "right", "blank", "down", "set", "preset1", "preset2", "preset3",])
+      details(["cameraDetails", "take", "up", "alarmStatus", "left", "pause", "right", "blank", "down", "set", "preset1", "preset2", "preset3", "refresh"])
   }
 }
 
