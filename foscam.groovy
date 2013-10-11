@@ -84,7 +84,7 @@ metadata {
     }
 
     standardTile("refresh", "device.alarmStatus", inactiveLabel: false, decoration: "flat") {
-        state "default", action:"polling.poll", icon:"st.secondary.refresh"
+      state "default", action:"polling.poll", icon:"st.secondary.refresh"
     }
 
     main "camera"
