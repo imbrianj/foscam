@@ -93,9 +93,9 @@ metadata {
 }
 
 def parseCameraResponse(def response) {
-  if (response.headers.'Content-Type'.contains("image/jpeg")) {
+  if(response.headers.'Content-Type'.contains("image/jpeg")) {
     def imageBytes = response.data
-    if (imageBytes) {
+    if(imageBytes) {
       storeImage(getPictureName(), imageBytes)
     }
   } 
@@ -243,7 +243,7 @@ private doRequest(uri, type, success) {
     httpPost(uri , "", success)
   }
 
-  else if (type == "get") {
+  else if(type == "get") {
     httpGet(uri, success)
   }
 }
