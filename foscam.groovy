@@ -42,8 +42,8 @@ metadata {
     }
 
     standardTile("alarmStatus", "device.alarmStatus", width: 1, height: 1, canChangeIcon: false, inactiveLabel: true, canChangeBackground: false) {
-      state "off", label: "off", action: "toggleAlarm", icon: "", backgroundColor: "#FFFFFF"
-      state "on", label: "on", action: "toggleAlarm", icon: "",  backgroundColor: "#53A7C0"
+      state "off", label: "off", action: "toggleAlarm", icon: "st.camera.dropcam-centered", backgroundColor: "#FFFFFF"
+      state "on", label: "on", action: "toggleAlarm", icon: "st.camera.dropcam-centered",  backgroundColor: "#53A7C0"
     }
 
     standardTile("left", "device.image", width: 1, height: 1, canChangeIcon: false,  canChangeBackground: false, decoration: "flat") {
@@ -87,7 +87,7 @@ metadata {
       state "default", action:"polling.poll", icon:"st.secondary.refresh"
     }
 
-    main "camera"
+    main "alarmStatus"
       details(["cameraDetails", "take", "up", "alarmStatus", "left", "pause", "right", "blank", "down", "set", "preset1", "preset2", "preset3", "refresh"])
   }
 }
