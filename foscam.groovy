@@ -92,15 +92,6 @@ metadata {
   }
 }
 
-def parseCameraResponse(def response) {
-  if(response.headers.'Content-Type'.contains("image/jpeg")) {
-    def imageBytes = response.data
-    if(imageBytes) {
-      storeImage(getPictureName(), imageBytes)
-    }
-  } 
-}
-
 private getPictureName() {
   def pictureUuid = java.util.UUID.randomUUID().toString().replaceAll('-', '')
   "image" + "_$pictureUuid" + ".jpg"
@@ -109,9 +100,14 @@ private getPictureName() {
 private take() {
   log.debug("Take a photo")
 
-  httpGet("http://${settings.username}:${settings.password}@${settings.ip}:${settings.port}/snapshot.cgi") {response ->        
+  api("snapshot", "") {
     log.debug("Image captured")
-    parseCameraResponse(response)
+
+    if(it.headers.'Content-Type'.contains("image/jpeg")) {
+      if(it.data) {
+        storeImage(getPictureName(), it.data)
+      }
+    }
   }
 }
 
@@ -254,8 +250,6 @@ private login() {
 
 def poll() {
   api("get_params", []) {
-    def params = ""
-
     it.data.eachLine {
       if(it.startsWith("var alarm_motion_armed=0")) {
         log.info("Polled: Alarm off")
