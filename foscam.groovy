@@ -3,7 +3,7 @@
  *
  *  Author: danny@smartthings.com
  *  Author: brian@bevey.org
- *  Date: 10/2/13
+ *  Date: 5/2/14
  *
  *  Modified example Foscam device type to support dynamic input of credentials
  *  and enable / disable motion alarm to easily integrate into homemade
@@ -16,16 +16,37 @@
  *  Custom Commands: alarmOn, alarmOff, toggleAlarm, left, right, up, down,
  *                   pause, set, preset, preset1, preset2, preset3
  */
- 
+
 preferences {
-  input("username", "text", title: "Username", description: "Your Foscam username")
-  input("password", "password", title: "Password", description: "Your Foscam password")
-  input("ip", "text", title: "IP address", description: "The IP address of your Foscam")
-  input("port", "text", title: "Port", description: "The port of your Foscam")
+  input("username", "text",     title: "Username",   description: "Your Foscam username")
+  input("password", "password", title: "Password",   description: "Your Foscam password")
+  input("ip",       "text",     title: "IP address", description: "The IP address of your Foscam")
+  input("port",     "text",     title: "Port",       description: "The port of your Foscam")
 }
 
-// for the UI
 metadata {
+  definition (name: "Foscam") {
+    capability "Polling"
+    capability "Image Capture"
+
+    attribute "setStatus",  "string"
+    attribute "alarmStats", "string"
+
+    command "alarmOn"
+    command "alarmOff"
+    command "toggleAlarm"
+    command "left"
+    command "right"
+    command "up"
+    command "down"
+    command "pause"
+    command "set"
+    command "preset"
+    command "preset1"
+    command "preset2"
+    command "preset3"
+  }
+
   tiles {
     carouselTile("cameraDetails", "device.image", width: 3, height: 2) { }
 
@@ -219,12 +240,12 @@ def set() {
 def api(method, args = [], success = {}) {
   def methods = [
     "decoder_control": [uri: "http://${ip}:${port}/decoder_control.cgi${login()}&${args}", type: "post"],
-    "snapshot": [uri: "http://${ip}:${port}/snapshot.cgi${login()}&${args}", type: "post"],
-    "set_alarm": [uri: "http://${ip}:${port}/set_alarm.cgi${login()}&${args}", type: "post"],
-    "reboot": [uri: "http://${ip}:${port}/reboot.cgi${login()}&${args}", type: "post"],
-    "camera_control": [uri: "http://${ip}:${port}/camera_control.cgi${login()}&${args}", type: "post"],
-    "get_params": [uri: "http://${ip}:${port}/get_params.cgi${login()}", type: "get"],
-    "videostream": [uri: "http://${ip}:${port}/videostream.cgi${login()}", type: "get"]
+    "snapshot":        [uri: "http://${ip}:${port}/snapshot.cgi${login()}&${args}",        type: "post"],
+    "set_alarm":       [uri: "http://${ip}:${port}/set_alarm.cgi${login()}&${args}",       type: "post"],
+    "reboot":          [uri: "http://${ip}:${port}/reboot.cgi${login()}&${args}",          type: "post"],
+    "camera_control":  [uri: "http://${ip}:${port}/camera_control.cgi${login()}&${args}",  type: "post"],
+    "get_params":      [uri: "http://${ip}:${port}/get_params.cgi${login()}",              type: "get"],
+    "videostream":     [uri: "http://${ip}:${port}/videostream.cgi${login()}",             type: "get"]
   ]
 
   def request = methods.getAt(method)
