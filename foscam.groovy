@@ -29,8 +29,8 @@ metadata {
     capability "Polling"
     capability "Image Capture"
 
-    attribute "setStatus",  "string"
-    attribute "alarmStats", "string"
+    attribute "setStatus",   "string"
+    attribute "alarmStatus", "string"
 
     command "alarmOn"
     command "alarmOff"
@@ -118,7 +118,7 @@ private getPictureName() {
   "image" + "_$pictureUuid" + ".jpg"
 }
 
-private take() {
+def take() {
   log.debug("Take a photo")
 
   api("snapshot", "") {
@@ -142,14 +142,14 @@ def toggleAlarm() {
   }
 }
 
-private alarmOn() {
+def alarmOn() {
   api("set_alarm", "motion_armed=1") {
     log.debug("Alarm changed to: on")
     sendEvent(name: "alarmStatus", value: "on");
   }
 }
 
-private alarmOff() {
+def alarmOff() {
   api("set_alarm", "motion_armed=0") {
     log.debug("Alarm changed to: off")
     sendEvent(name: "alarmStatus", value: "off");
