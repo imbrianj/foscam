@@ -17,17 +17,10 @@
  *                   pause, set, preset, preset1, preset2, preset3
  */
 
-preferences {
-  input("username", "text",     title: "Username",   description: "Your Foscam username")
-  input("password", "password", title: "Password",   description: "Your Foscam password")
-  input("ip",       "text",     title: "IP address", description: "The IP address of your Foscam")
-  input("port",     "text",     title: "Port",       description: "The port of your Foscam")
-}
-
 metadata {
-  definition (name: "Foscam") {
-    capability "Polling"
+  definition (name: "Foscam-Remote", namespace: "imbrianj", author: "brian@bevey.org") {
     capability "Image Capture"
+    capability "Polling"
 
     attribute "setStatus",   "string"
     attribute "alarmStatus", "string"
@@ -45,6 +38,13 @@ metadata {
     command "preset1"
     command "preset2"
     command "preset3"
+  }
+
+  preferences {
+    input("username", "text",     title: "Username",   description: "Your Foscam username")
+    input("password", "password", title: "Password",   description: "Your Foscam password")
+    input("ip",       "text",     title: "IP address", description: "The IP address of your Foscam")
+    input("port",     "text",     title: "Port",       description: "The port of your Foscam")
   }
 
   tiles {
@@ -74,7 +74,7 @@ metadata {
     standardTile("pause", "device.image", width: 1, height: 1, canChangeIcon: false,  canChangeBackground: false, decoration: "flat") {
       state "pause", label: "pause", action: "pause", icon: ""
     }
-    
+
     standardTile("right", "device.image", width: 1, height: 1, canChangeIcon: false,  canChangeBackground: false, decoration: "flat") {
       state "take", label: "right", action: "right", icon: ""
     }
@@ -109,7 +109,8 @@ metadata {
     }
 
     main "alarmStatus"
-      details(["cameraDetails", "take", "up", "alarmStatus", "left", "pause", "right", "blank", "down", "set", "preset1", "preset2", "preset3", "refresh"])
+
+    details(["cameraDetails", "take", "up", "alarmStatus", "left", "pause", "right", "blank", "down", "set", "preset1", "preset2", "preset3", "refresh"])
   }
 }
 
